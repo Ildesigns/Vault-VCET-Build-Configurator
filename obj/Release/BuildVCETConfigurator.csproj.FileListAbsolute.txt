@@ -1,0 +1,7 @@
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Release\BuildVCETConfigurator.csprojAssemblyReference.cache
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Release\BuildVCETConfigurator.csproj.CoreCompileInputs.cache
+C:\temp\VCETConfigurator.dll
+C:\temp\VCETConfigurator.pdb
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Release\BuildVCETConfigurator.csproj.CopyComplete
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Release\VCETConfigurator.dll
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Release\VCETConfigurator.pdb

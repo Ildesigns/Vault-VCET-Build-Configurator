@@ -1,0 +1,10 @@
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\bin\Debug\VCETConfigurator.dll
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\bin\Debug\VCETConfigurator.pdb
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\bin\Debug\Microsoft.Build.Framework.dll
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Debug\BuildVCETConfigurator.csprojAssemblyReference.cache
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Debug\BuildVCETConfigurator.csproj.CoreCompileInputs.cache
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Debug\BuildVCETConfigurator.csproj.CopyComplete
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Debug\VCETConfigurator.dll
+C:\Users\ne50004\Safe\Workspaces\AWS2\Ansaldo Web Services\BuildVCETConfigurator\obj\Debug\VCETConfigurator.pdb
+C:\temp\VCETConfigurator.dll
+C:\temp\VCETConfigurator.pdb
