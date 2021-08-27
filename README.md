@@ -1,2 +1,2 @@
 # Vault-VCET-Build-Configurator
-Configures Vault Extension VCET files to the referenced DLLs automatically.
+MS Build Task which configures Vault Extension VCET files to the referenced DLLs automatically.
