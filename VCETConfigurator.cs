@@ -10,7 +10,6 @@ namespace SoupSoftware
     {
 
         [Required]
-        public string InputFilename { get; set; }
         public string Path { get; set; }
         [Required]
         public string referencePath { get; set; }
@@ -19,9 +18,6 @@ namespace SoupSoftware
         const string attribute = "interface";
         public override bool Execute()
         {
-            Log.LogMessage(MessageImportance.High, "Starting VCET Modification", null);
-           // System.Diagnostics.Debugger.Launch();
-            try
 
             if (!System.IO.Directory.Exists(Path))
             {
@@ -45,8 +41,6 @@ namespace SoupSoftware
                     try
                     {
                         XmlDocument doc = new XmlDocument();
-                doc.Load(InputFilename);
-                XmlNode node = null;
                         doc.Load(vcetFile);
                         XmlNodeList nodes = null;
                         if (xmlTag.Length != 0)
@@ -54,11 +48,9 @@ namespace SoupSoftware
 
                             // here we are also searching on an attribute within the node with XPath,
                             // but not necessarily an attribute we are modifying
-                    node = doc.SelectSingleNode(String.Format("//{0}", xmlTag));
                             nodes = doc.SelectNodes(String.Format("//{0}", xmlTag));
                         }
 
-                if (node != null)
                         if (nodes.Count > 0)
                         {
                             if (attribute.Length != 0)
@@ -73,19 +65,12 @@ namespace SoupSoftware
                                         string assypath = System.IO.Path.Combine(referencePath, assyname + ".dll");
                                         if (System.IO.File.Exists(assypath))
                                         {
-
                                             System.Reflection.AssemblyName assy = System.Reflection.AssemblyName.GetAssemblyName(assypath);
-
-
                                             string version = assy.Version.ToString();
                                             string pkt = assy.GetPublicKeyToken().ToString();
-
                                             string newinterface = string.Format("{0}, {1}", new string[] { typefromAssy, assy.FullName });
-                                Log.LogMessage(MessageImportance.High,"Interface is now " + newinterface);
                                             Log.LogMessage(MessageImportance.High, "Interface is now " + newinterface);
                                             node.Attributes[attribute].Value = newinterface;
-                                doc.Save(InputFilename);
-                                return true;
                                             doc.Save(vcetFile);
                                         }
                                         else
@@ -93,8 +78,6 @@ namespace SoupSoftware
                                             Log.LogError("Could not locate file " + assypath);
                                             return false;
                                         }
-
-                            
                                     }
                                 }
                                 return true;
