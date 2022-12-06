@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.Build.Utilities;
 using System.Xml;
 using Microsoft.Build.Framework;
@@ -10,6 +10,7 @@ namespace SoupSoftware
     {
 
         [Required]
+        public string InputFilename { get; set; }
         public string Path { get; set; }
         [Required]
         public string referencePath { get; set; }
@@ -18,22 +19,25 @@ namespace SoupSoftware
         const string attribute = "interface";
         public override bool Execute()
         {
-         
+            Log.LogMessage(MessageImportance.High, "Starting VCET Modification", null);
+           // System.Diagnostics.Debugger.Launch();
+            try
+
             if (!System.IO.Directory.Exists(Path))
             {
                 Log.LogError("Input Path " + Path + " cannot be found");
                 return false;
             }
 
-            string[] vcetfiles =  System.IO.Directory.GetFiles(Path, "*.VCET.config");
+            string[] vcetfiles = System.IO.Directory.GetFiles(Path, "*.VCET.config");
 
-            if (vcetfiles.Length  ==0)
+            if (vcetfiles.Length == 0)
             {
                 Log.LogMessage("There are 0 files to process");
                 return true;
             }
             Log.LogMessage(MessageImportance.Low, "Starting VCET Modification", null);
-           // System.Diagnostics.Debugger.Launch();
+            //System.Diagnostics.Debugger.Launch();
             try
             {
                 foreach (string vcetFile in vcetfiles)
@@ -41,43 +45,59 @@ namespace SoupSoftware
                     try
                     {
                         XmlDocument doc = new XmlDocument();
+                doc.Load(InputFilename);
+                XmlNode node = null;
                         doc.Load(vcetFile);
-                        XmlNode node = null;
+                        XmlNodeList nodes = null;
                         if (xmlTag.Length != 0)
                         {
 
                             // here we are also searching on an attribute within the node with XPath,
                             // but not necessarily an attribute we are modifying
-                            node = doc.SelectSingleNode(String.Format("//{0}", xmlTag));
+                    node = doc.SelectSingleNode(String.Format("//{0}", xmlTag));
+                            nodes = doc.SelectNodes(String.Format("//{0}", xmlTag));
                         }
 
-                        if (node != null)
+                if (node != null)
+                        if (nodes.Count > 0)
                         {
                             if (attribute.Length != 0)
                             {
-                                if (node.Attributes[attribute] != null)
+                                foreach (XmlNode node in nodes)
                                 {
-                                    string typeasstring = node.Attributes[attribute].Value;
-                                    string assyname = typeasstring.Split(',')[1].Trim();
-                                    string typefromAssy = typeasstring.Split(',')[0].Trim();
-                                    string assypath = System.IO.Path.Combine(referencePath, assyname + ".dll");
-                                    if (System.IO.File.Exists(assypath))
+                                    if (node.Attributes[attribute] != null)
                                     {
-                                        System.Reflection.AssemblyName assy = System.Reflection.AssemblyName.GetAssemblyName(assypath);
-                                        string version = assy.Version.ToString();
-                                        string pkt = assy.GetPublicKeyToken().ToString();
-                                        string newinterface = string.Format("{0}, {1}", new string[] { typefromAssy, assy.FullName });
-                                        Log.LogMessage(MessageImportance.High, "Interface is now " + newinterface);
-                                        node.Attributes[attribute].Value = newinterface;
-                                        doc.Save(vcetFile);
-                                        return true;
-                                    }
-                                    else
-                                    {
-                                        Log.LogError("Could not locate file " + assypath);
-                                        return false;
+                                        string typeasstring = node.Attributes[attribute].Value;
+                                        string assyname = typeasstring.Split(',')[1].Trim();
+                                        string typefromAssy = typeasstring.Split(',')[0].Trim();
+                                        string assypath = System.IO.Path.Combine(referencePath, assyname + ".dll");
+                                        if (System.IO.File.Exists(assypath))
+                                        {
+
+                                            System.Reflection.AssemblyName assy = System.Reflection.AssemblyName.GetAssemblyName(assypath);
+
+
+                                            string version = assy.Version.ToString();
+                                            string pkt = assy.GetPublicKeyToken().ToString();
+
+                                            string newinterface = string.Format("{0}, {1}", new string[] { typefromAssy, assy.FullName });
+                                Log.LogMessage(MessageImportance.High,"Interface is now " + newinterface);
+                                            Log.LogMessage(MessageImportance.High, "Interface is now " + newinterface);
+                                            node.Attributes[attribute].Value = newinterface;
+                                doc.Save(InputFilename);
+                                return true;
+                                            doc.Save(vcetFile);
+                                        }
+                                        else
+                                        {
+                                            Log.LogError("Could not locate file " + assypath);
+                                            return false;
+                                        }
+
+                            
                                     }
                                 }
+                                return true;
                             }
                             Log.LogError("Couldn't find Xml Node - {0}", xmlTag);
                             return false;
@@ -93,8 +113,7 @@ namespace SoupSoftware
             {
                 Log.LogError(ex.Message);
             }
-             return false;
+            return false;
         }
     }
 }
-
